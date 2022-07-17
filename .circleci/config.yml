@@ -58,4 +58,8 @@ jobs:
           name: On failure
           command: curl --data fail_tests.log http://example.com/error_logs
           when: on_fail
-
+workflows:
+  cmd-workflow:
+    jobs:
+      - Exit_Non_zero
+      - JOB2
