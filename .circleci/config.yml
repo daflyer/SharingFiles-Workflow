@@ -51,9 +51,6 @@ jobs:
     <<: *defaults
     steps:
       - run: return 1
-  JOB2:
-    <<: *defaults
-    steps:
       - run: 
           name: On failure
           command: curl --data fail_tests.log http://example.com/error_logs
