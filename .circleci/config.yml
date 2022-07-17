@@ -59,4 +59,4 @@ workflows:
   cmd-workflow:
     jobs:
       - Exit_Non_zero
-      - JOB2
+      # - JOB2
