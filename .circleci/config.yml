@@ -20,21 +20,42 @@ version: 2.1
 #           paths:
 #             - output.txt
 
-commands:
-  print_pipeline_id:
-    steps:
-      - run: echo $CIRCLE_WORKFLOW_ID
+#REUSABLE JOB CODE
+# commands:
+#   print_pipeline_id:
+#     steps:
+#       - run: echo $CIRCLE_WORKFLOW_ID
 
-jobs:
-  my_cmd:
-    docker: 
-      - image: circleci/node:13.8.0
+# jobs:
+#   my_cmd:
+#     docker: 
+#       - image: circleci/node:13.8.0
     
-    steps:
-      - print_pipeline_id 
+#     steps:
+#       - print_pipeline_id 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
-workflows:
-  cmd-workflow:
-    jobs:
-      - my_cmd
+# workflows:
+#   cmd-workflow:
+#     jobs:
+#       - my_cmd
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:13.8.0
+  # working_directory: ~/project
+
+#JOB FAILURES
+jobs:
+  Exit_Non_zero:
+    <<: *defaults
+    steps:
+      - run: return 1
+  JOB2:
+    <<: *defaults
+    steps:
+      - run: 
+          name: On failure
+          command: curl --data fail_tests.log http://example.com/error_logs
+          when: on_fail
+
